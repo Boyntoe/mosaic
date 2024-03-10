@@ -26,20 +26,22 @@ const PostPreview = ({
       <div className="mb-5">
         <CoverImage slug={slug} title={title} src={coverImage} />
       </div>
-      <h3 className="text-3xl mb-3 leading-snug">
-        <Link
-          as={`/posts/${slug}`}
-          href="/posts/[slug]"
-          className="hover:text-blue-600 transition-colors"
-        >
-          {title}
-        </Link>
-      </h3>
-      <div className="text-lg mb-4">
-        <DateFormatter dateString={date} />
+      <div className="m-4 ml-6 mr-6">
+        <h3 className="text-3xl mb-3 leading-snug">
+          <Link
+            as={`/posts/${slug}`}
+            href="/posts/[slug]"
+            className="hover:text-blue-600 transition-colors"
+          >
+            {title}
+          </Link>
+        </h3>
+        <div className="text-lg mb-4">
+          <DateFormatter dateString={date} />
+        </div>
+        <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
+          <Avatar name={author.name} picture={author.picture} />
       </div>
-      <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-      <Avatar name={author.name} picture={author.picture} />
     </div>
   );
 };

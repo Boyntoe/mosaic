@@ -1,15 +1,11 @@
 import { useRouter } from "next/router";
 import MoreStories from "../../components/more-stories";
 import ErrorPage from "next/error";
-import Container from "../../components/container";
 import Avatar from "../../components/avatar";
-import PostHeader from "../../components/post-header";
 import Layout from "../../components/layout";
 import { getPostBySlug, getAllPosts } from "../../lib/api";
 import PostTitle from "../../components/post-title";
 import Head from "next/head";
-import { CMS_NAME } from "../../lib/constants";
-import markdownToHtml from "../../lib/markdownToHtml";
 import type PostType from "../../interfaces/post";
 
 type Props = {
@@ -35,27 +31,22 @@ export default function Post({ posts, preview }: Props) {
         }
         {author.name}
       </PostTitle>
-      <Container>
-        {router.isFallback ? (
-          <PostTitle>Loading…</PostTitle>
-        ) : (
-          <>
-            <MoreStories posts={posts} />
-          </>
-        )}
-      </Container>
+      {router.isFallback ? (
+        <PostTitle>Loading…</PostTitle>
+      ) : (
+        <MoreStories posts={posts} />
+      )}
     </Layout>
   );
 }
 
 type Params = {
   params: {
-    author: string;
+    author: string,
   };
 };
 
 export async function getStaticProps({ params }: Params) {
-  console.log("PARAMS", params)
   const posts = getAllPosts([
     "title",
     "date",
@@ -75,8 +66,6 @@ export async function getStaticProps({ params }: Params) {
 
 export async function getStaticPaths() {
   const posts = getAllPosts(["slug", "author"]);
-  console.log("KJSDKJ");
-  console.log(posts);
   return {
     paths: posts.map((post) => {
       return {

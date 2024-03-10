@@ -1,6 +1,7 @@
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
+import PostType from "../interfaces/post";
 
 const postsDirectory = join(process.cwd(), "_posts");
 
@@ -18,7 +19,7 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
     [key: string]: string;
   };
 
-  const items: Items = {};
+  const items: Partial<PostType> = {};
 
   // Ensure only the minimal needed data is exposed
   fields.forEach((field) => {

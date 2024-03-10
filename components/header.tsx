@@ -29,7 +29,7 @@ const Header = () => {
           Contact
         </Link>
       </h4>
-      <Image src="/assets/instagram.svg" width={24} height={24} alt="Instagram"/>
+      <Link href=""><Image src="/assets/instagram.svg" width={24} height={24} alt="Instagram"/></Link>
     </section>
   );
 };

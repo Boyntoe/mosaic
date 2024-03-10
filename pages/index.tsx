@@ -1,4 +1,3 @@
-import Container from "../components/container";
 import MoreStories from "../components/more-stories";
 import HeroPost from "../components/hero-post";
 import Layout from "../components/layout";
@@ -18,7 +17,6 @@ export default function Index({ allPosts }: Props) {
       <Head>
         <title>Mosaic</title>
       </Head>
-      <Container>
         {heroPost && (
           <HeroPost
             title={heroPost.title}
@@ -30,7 +28,6 @@ export default function Index({ allPosts }: Props) {
           />
         )}
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-      </Container>
     </Layout>
   );
 }
