@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
+import MoreStories from "../../components/more-stories";
 import ErrorPage from "next/error";
 import Container from "../../components/container";
-import PostBody from "../../components/post-body";
+import Avatar from "../../components/avatar";
 import PostHeader from "../../components/post-header";
 import Layout from "../../components/layout";
 import { getPostBySlug, getAllPosts } from "../../lib/api";
@@ -12,36 +13,34 @@ import markdownToHtml from "../../lib/markdownToHtml";
 import type PostType from "../../interfaces/post";
 
 type Props = {
-  post: PostType;
-  morePosts: PostType[];
+  posts: PostType[];
   preview?: boolean;
 };
 
-export default function Post({ post, morePosts, preview }: Props) {
+export default function Post({ posts, preview }: Props) {
   const router = useRouter();
-  if (!router.isFallback && !post?.slug) {
+  if (!router.isFallback && posts?.length == 0) {
     return <ErrorPage statusCode={404} />;
   }
+  const author = posts[0].author;
   return (
     <Layout preview={preview}>
+      <Head>
+        <title>{author.name}</title>
+        <meta property="og:image" content={posts[0].author.picture} />
+      </Head>
+      <PostTitle>
+        {
+         //<img src={author.picture} className="w-24 h-24 rounded-full mr-4 inline" alt={author.name} />
+        }
+        {author.name}
+      </PostTitle>
       <Container>
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
-            <article className="mb-32">
-              <Head>
-                <title>{post.title}</title>
-                <meta property="og:image" content={post.ogImage.url} />
-              </Head>
-              <PostHeader
-                title={post.title}
-                coverImage={post.coverImage}
-                date={post.date}
-                author={post.author}
-              />
-              <PostBody content={post.content} />
-            </article>
+            <MoreStories posts={posts} />
           </>
         )}
       </Container>
@@ -51,12 +50,13 @@ export default function Post({ post, morePosts, preview }: Props) {
 
 type Params = {
   params: {
-    slug: string;
+    author: string;
   };
 };
 
 export async function getStaticProps({ params }: Params) {
-  const post = getPostBySlug(params.slug, [
+  console.log("PARAMS", params)
+  const posts = getAllPosts([
     "title",
     "date",
     "slug",
@@ -64,27 +64,24 @@ export async function getStaticProps({ params }: Params) {
     "content",
     "ogImage",
     "coverImage",
-  ]);
-  const content = await markdownToHtml(post.content || "");
+  ]).filter(post => post.author.name.toLowerCase().replace(/\s/, "_") === params.author);
 
   return {
     props: {
-      post: {
-        ...post,
-        content,
-      },
+      posts
     },
   };
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(["slug"]);
-
+  const posts = getAllPosts(["slug", "author"]);
+  console.log("KJSDKJ");
+  console.log(posts);
   return {
     paths: posts.map((post) => {
       return {
         params: {
-          slug: post.slug,
+          author: post.author.name.toLowerCase().replace(/\s/, "_"),
         },
       };
     }),

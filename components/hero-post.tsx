@@ -32,7 +32,7 @@ const HeroPost = ({
             <Link
               as={`/posts/${slug}`}
               href="/posts/[slug]"
-              className="hover:underline"
+              className="hover:text-blue-600 transition-colors"
             >
               {title}
             </Link>
