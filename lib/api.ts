@@ -1,10 +1,14 @@
 import fs from "fs";
 import { join } from "path";
+import { parseISO, format } from "date-fns";
 import matter from "gray-matter";
 import PostType from "../interfaces/post";
 
 const postsDirectory = join(process.cwd(), "_posts");
 
+export function getUrlString(str: string) {
+  return str.toLowerCase().replace(/\s/, "_");
+}
 export function getPostSlugs() {
   return fs.readdirSync(postsDirectory);
 }

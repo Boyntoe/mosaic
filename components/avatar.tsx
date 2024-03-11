@@ -7,11 +7,11 @@ type Props = {
 
 const Avatar = ({ name, picture }: Props) => {
   return (
-    <Link href={`/authors/${name.toLowerCase().replace(/\s/, "_")}`} className="flex items-center hover:text-blue-600 transition-colors ">
+    <Link href={`/authors/${name.toLowerCase().replace(/\s/, "_")}`} className="hover:text-blue-600 transition-colors block w-fit">
       {
       //<img src={picture} className="w-12 h-12 rounded-full mr-4" alt={name} />
       }
-      <div className="text-xl font-bold">{name}</div>
+      <div className="text-xl font-bold w-fit">{name}</div>
     </Link>
   );
 };
