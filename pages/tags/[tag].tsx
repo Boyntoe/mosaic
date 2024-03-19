@@ -1,35 +1,36 @@
 import { useRouter } from "next/router";
 import MoreStories from "../../components/more-stories";
 import ErrorPage from "next/error";
-import Avatar from "../../components/avatar";
 import Layout from "../../components/layout";
-import { getUrlString, getPostBySlug, getAllPosts } from "../../lib/api";
+import { getUrlString, getAllPosts } from "../../lib/api";
+import { parseISO, format } from "date-fns";
 import PostTitle from "../../components/post-title";
 import Head from "next/head";
 import type PostType from "../../interfaces/post";
 
 type Props = {
   posts: PostType[];
+  tag: string;
   preview?: boolean;
 };
 
-export default function Author({ posts, preview }: Props) {
+export function formatDateString(dateString: string) {
+  return format(parseISO(dateString), "LLLL yyyy")
+}
+
+export default function Post({ posts, tag, preview }: Props) {
   const router = useRouter();
   if (!router.isFallback && posts?.length == 0) {
     return <ErrorPage statusCode={404} />;
   }
-  const author = posts[0].author;
   return (
     <Layout preview={preview}>
       <Head>
-        <title>{author.name}</title>
-        <meta property="og:image" content={posts[0].author.picture} />
+        <title>{tag}</title>
+        <meta property="og:image" content={posts[0].ogImage.url} />
       </Head>
       <PostTitle>
-        {
-         //<img src={author.picture} className="w-24 h-24 rounded-full mr-4 inline" alt={author.name} />
-        }
-        {author.name}
+        {tag}
       </PostTitle>
       {router.isFallback ? (
         <PostTitle>Loading…</PostTitle>
@@ -42,7 +43,7 @@ export default function Author({ posts, preview }: Props) {
 
 type Params = {
   params: {
-    author: string,
+    tag: string,
   };
 };
 
@@ -56,24 +57,20 @@ export async function getStaticProps({ params }: Params) {
     "content",
     "ogImage",
     "coverImage",
-  ]).filter(post => getUrlString(post.author.name) === params.author);
-
+  ]).filter(post => (new Set(post.tags.map(tag => getUrlString(tag)))).has(params.tag));
   return {
     props: {
-      posts
+      posts,
+      tag: posts[0].tags.filter(t => getUrlString(t) === params.tag)[0],
     },
   };
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(["author"]);
+  const posts = getAllPosts(["tags"]);
   return {
-    paths: Array.from(new Set(posts.map((post) => {
-      return {
-        params: {
-          author: getUrlString(post.author.name),
-        },
-      };
+    paths: Array.from(new Set(posts.flatMap((post) => {
+      return post["tags"].map(tag => ({ params: { tag: getUrlString(tag) } }))
     }))),
     fallback: false,
   };

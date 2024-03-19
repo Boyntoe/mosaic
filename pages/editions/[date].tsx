@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import MoreStories from "../../components/more-stories";
 import ErrorPage from "next/error";
-import Avatar from "../../components/avatar";
 import Layout from "../../components/layout";
 import { getUrlString, getAllPosts } from "../../lib/api";
 import { parseISO, format } from "date-fns";
@@ -31,9 +30,6 @@ export default function Post({ posts, preview }: Props) {
         <meta property="og:image" content={posts[0].ogImage.url} />
       </Head>
       <PostTitle>
-        {
-         //<img src={author.picture} className="w-24 h-24 rounded-full mr-4 inline" alt={author.name} />
-        }
         {date}
       </PostTitle>
       {router.isFallback ? (
@@ -56,6 +52,7 @@ export async function getStaticProps({ params }: Params) {
     "title",
     "date",
     "slug",
+    "tags",
     "author",
     "content",
     "ogImage",
@@ -69,7 +66,7 @@ export async function getStaticProps({ params }: Params) {
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(["slug", "date"]);
+  const posts = getAllPosts(["date"]);
   return {
     paths: Array.from(new Set(posts.map((post) => {
       return {

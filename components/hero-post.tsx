@@ -4,11 +4,13 @@ import CoverImage from "./cover-image";
 import Link from "next/link";
 import type Author from "../interfaces/author";
 import Card from "./card";
+import Tag from "./tag";
 
 type Props = {
   title: string;
   coverImage: string;
   date: string;
+  tags: [string];
   excerpt: string;
   author: Author;
   slug: string;
@@ -18,6 +20,7 @@ const HeroPost = ({
   title,
   coverImage,
   date,
+  tags,
   excerpt,
   author,
   slug,
@@ -42,6 +45,7 @@ const HeroPost = ({
               </h3>
               <div className="mb-0 text-lg">
                 <DateFormatter dateString={date} />
+                {tags.map(tag => <Tag name={tag}/>)}
               </div>
             </div>
             <div>

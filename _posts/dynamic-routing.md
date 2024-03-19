@@ -3,6 +3,7 @@ title: "In One Ear"
 excerpt: "A very nice tale."
 coverImage: "/assets/blog/dynamic-routing/cover.jpg"
 date: "2024-03-16"
+tags: ["Fiction"]
 author:
   name: Natalie Jaech
   picture: "/assets/blog/authors/jj.jpeg"
