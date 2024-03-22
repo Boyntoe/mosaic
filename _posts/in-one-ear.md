@@ -1,16 +1,15 @@
 ---
 title: "In One Ear"
-excerpt: "A very nice tale."
-coverImage: "/assets/blog/dynamic-routing/cover.jpg"
-date: "2024-03-16"
-tags: ["Fiction"]
+excerpt: "It’s amazing what you miss when you’re not paying attention."
+coverImage: "/assets/blog/preview/cover.jpg"
+date: "2020-03-16T05:35:07.322Z"
+tags: ["test1", "test2"]
 author:
   name: Natalie Jaech
-  picture: "/assets/blog/authors/jj.jpeg"
+  picture: "/assets/blog/authors/joe.jpeg"
 ogImage:
-  url: "/assets/blog/dynamic-routing/cover.jpg"
+  url: "/assets/blog/preview/cover.jpg"
 ---
-
 
 “Are you even listening to me right now?”
 

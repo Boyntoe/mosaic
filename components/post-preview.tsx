@@ -41,7 +41,7 @@ const PostPreview = ({
         </h3>
         <div className="text-lg mb-4">
           <DateFormatter dateString={date} />
-          {tags.map(tag => <Tag name={tag}/>)}
+          {tags.map((tag, i) => <Tag name={tag} key={i}/>)}
         </div>
         <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
           <Avatar name={author.name} picture={author.picture} />

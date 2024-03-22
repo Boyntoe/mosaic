@@ -45,7 +45,7 @@ const HeroPost = ({
               </h3>
               <div className="mb-0 text-lg">
                 <DateFormatter dateString={date} />
-                {tags.map(tag => <Tag name={tag}/>)}
+                {tags.map((tag, i) => <Tag name={tag} key={i}/>)}
               </div>
             </div>
             <div>

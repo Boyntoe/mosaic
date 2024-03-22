@@ -30,7 +30,7 @@ const PostHeader = ({ title, coverImage, date, tags, author }: Props) => {
         </div>
         <div className="mb-8 text-lg">
           <DateFormatter dateString={date} />
-          {tags.map(tag => <Tag name={tag}/>)}
+          {tags.map((tag, i) => <Tag name={tag} key={i}/>)}
         </div>
       </div>
     </>

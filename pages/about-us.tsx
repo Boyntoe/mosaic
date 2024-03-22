@@ -12,7 +12,9 @@ export default function AboutUs() {
       <Head>
         <title>About Us</title>
       </Head>
-      <p>Lorem Ipsum</p>
+      <p>Mosaic is an independent magazine that publishes fiction, nonfiction and essays. The goal of Mosaic is to be a place that uplifts writers, shares
+    heartfelt stories, and fosters creative community.  
+      </p>
     </Layout>
   );
 }
